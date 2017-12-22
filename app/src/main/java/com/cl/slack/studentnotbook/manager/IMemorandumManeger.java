@@ -28,6 +28,8 @@ public interface IMemorandumManeger {
 
     List<Memorandum> findMemorandumByData(String data);
 
+    List<Memorandum> findMemorandumToday();
+
     List<Memorandum> findMemorandumByData(String data, boolean detail);
 
     List<Memorandum> findMemorandum(Student student, String data);

@@ -1,26 +1,26 @@
 package com.cl.slack.studentnotbook;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
 import com.cl.slack.studentnotbook.bean.Grades;
 import com.cl.slack.studentnotbook.bean.Memorandum;
 import com.cl.slack.studentnotbook.bean.Student;
 import com.cl.slack.studentnotbook.database.DataOperater;
-import com.cl.slack.studentnotbook.manager.GradesManagerImpl;
 import com.cl.slack.studentnotbook.manager.IGradesManager;
 import com.cl.slack.studentnotbook.manager.IMemorandumManeger;
 import com.cl.slack.studentnotbook.manager.IStudentManager;
-import com.cl.slack.studentnotbook.manager.MemorandumManagerImpl;
-import com.cl.slack.studentnotbook.manager.StudentManagerImpl;
+import com.cl.slack.studentnotbook.widget.NoteAdapter;
 
 import java.util.List;
-import java.util.UUID;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String TAG = "Student";
+    private NoteAdapter mNoteAdapter;
+    private NoteData mNoteData = new NoteData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,18 @@ public class MainActivity extends AppCompatActivity {
 
         DataOperater.instance.init(this);
 
-        testGrades();
+        initView();
+
+//        testGrades();
+    }
+
+    private void initView() {
+        List<Memorandum> data = mMemorandumManeger.findMemorandumToday();
+        mNoteData.addAll(data);
+        RecyclerView noteList = (RecyclerView) findViewById(R.id.main_note_list);
+        noteList.setLayoutManager(new GridLayoutManager(this, 2));
+        mNoteAdapter = new NoteAdapter(noteList, mNoteData);
+        noteList.setAdapter(mNoteAdapter);
     }
 
     private void testGrades() {

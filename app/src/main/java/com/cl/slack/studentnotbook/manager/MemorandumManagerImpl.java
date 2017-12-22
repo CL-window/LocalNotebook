@@ -6,7 +6,9 @@ import com.cl.slack.studentnotbook.bean.Memorandum;
 import com.cl.slack.studentnotbook.bean.Student;
 import com.cl.slack.studentnotbook.database.DataOperater;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,6 +77,12 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
     @Override
     public List<Memorandum> findMemorandumByData(String data) {
         return findMemorandumByData(data, true);
+    }
+
+    private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
+    @Override
+    public List<Memorandum> findMemorandumToday() {
+        return findMemorandumByData(formatter.format(new Date()), true);
     }
 
     @Override
