@@ -21,9 +21,14 @@ public class GradesManagerImpl implements IGradesManager {
     private GradesManagerImpl() {
     }
 
+
+    private long currentTime() {
+        return System.currentTimeMillis();
+    }
+
     @Override
     public boolean addGrades(Grades grades) {
-        return mDataOperater.addGrades(grades.getId(), grades.name);
+        return mDataOperater.addGrades(grades.getId(), grades.name, currentTime());
     }
 
     @Override
@@ -38,7 +43,7 @@ public class GradesManagerImpl implements IGradesManager {
 
     @Override
     public boolean updateGrades(Grades grades) {
-        return mDataOperater.updateGrades("name = '" + grades.name + "'","id = '" + grades.getId() + "'");
+        return mDataOperater.updateGrades("name = '" + grades.name + "', updateData='" + currentTime() + "'","id = '" + grades.getId() + "'");
     }
 
     @Override
@@ -65,7 +70,7 @@ public class GradesManagerImpl implements IGradesManager {
     @Override
     public List<Grades> findGradesByName(String name) {
         List<Grades> grades = new ArrayList<>();
-        Cursor cursor = mDataOperater.selectGrades("*", "name = '" + name + "'");
+        Cursor cursor = mDataOperater.selectGrades("*", "name LIKE '%" + name + "%'");
         if (cursor.moveToFirst()) {
             do {
                 grades.add(Grades.genGrades(cursor));

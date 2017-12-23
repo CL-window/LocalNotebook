@@ -27,7 +27,7 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
 
     @Override
     public boolean addMemorandum(Memorandum memorandum) {
-        return mDataOperater.addMemorandum(memorandum.getId(), memorandum.content, memorandum.data, memorandum.student.getId());
+        return mDataOperater.addMemorandum(memorandum.getId(), memorandum.content, memorandum.data, currentTime(), memorandum.student.getId());
     }
 
     @Override
@@ -40,10 +40,15 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
         return mDataOperater.deleteMemorandum("id ='" + id + "'");
     }
 
+    private long currentTime() {
+        return System.currentTimeMillis();
+    }
+
     @Override
     public boolean updateMemorandum(Memorandum memorandum) {
         return mDataOperater.updateMemorandum("content = '" + memorandum.content +
-                        "', data = '" + memorandum.data + "', student_id = '" + memorandum.student.getId() + "'",
+                        "', data = '" + memorandum.data + "', student_id = '" + memorandum.student.getId() +
+                "', updateData = '" + currentTime() + "'",
                 "id ='" + memorandum.getId() + "'");
     }
 
@@ -53,7 +58,7 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
     }
 
     private Memorandum newMemorandum(Cursor cursor, boolean detail) {
-        String id = cursor.getString(3);
+        String id = cursor.getString(4);
         Student student = Student.genStudent(id);
         if(detail) {
             student = mStudentManager.findStudentById(id, true);

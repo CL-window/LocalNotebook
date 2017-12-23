@@ -23,9 +23,14 @@ public class StudentManagerImpl implements IStudentManager {
     private StudentManagerImpl() {
     }
 
+
+    private long currentTime() {
+        return System.currentTimeMillis();
+    }
+
     @Override
     public boolean addStudent(Student student) {
-        return mDataOperater.addStudent(student.getId(), student.nameCH, student.nameEN, student.grades.getId());
+        return mDataOperater.addStudent(student.getId(), student.nameCH, student.nameEN, student.grades.getId(), currentTime());
     }
 
     @Override
@@ -41,7 +46,8 @@ public class StudentManagerImpl implements IStudentManager {
     @Override
     public boolean updateStudent(Student student) {
         return mDataOperater.updateStudent("name_ch = '" + student.nameCH +
-                        "', name_en = '" + student.nameEN + "', grades_id = '" + student.grades.getId() + "'",
+                        "', name_en = '" + student.nameEN + "', grades_id = '" +
+                        student.grades.getId() + "', updateData='" + currentTime() + "'",
                 "id ='" + student.getId() + "'");
     }
 

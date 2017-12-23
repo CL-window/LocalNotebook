@@ -13,7 +13,7 @@ import java.util.Date;
 
 public class Memorandum extends Base{
     public String content;
-    public String data;
+    public String data;// 日期
     public Student student;
 
     private SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");

@@ -17,7 +17,8 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
 
     private String CREATE_GRADES = "create table Grades (" +
             "id CHAR(40) primary key NOT NULL," +
-            "name CHAR(40) NOT NULL " +
+            "name CHAR(40) NOT NULL, " +
+            "updateData CHAR(20) NOT NULL"+
             ")";
 
     private String CREATE_STUDENT = "create table Student (" +
@@ -25,6 +26,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             "name_ch CHAR(10) NOT NULL,"+
             "name_en CHAR(40) NOT NULL,"+
             "grades_id CHAR(40) NOT NULL," +
+            "updateData CHAR(20) NOT NULL," +
             " FOREIGN KEY (grades_id) REFERENCES Grades(id) " +
             ")";
 
@@ -32,6 +34,7 @@ public class MySQLiteOpenHelper extends SQLiteOpenHelper {
             "id CHAR(40) primary key NOT NULL," +
             "content CHAR(255) NOT NULL,"+
             "data CHAR(10) NOT NULL,"+
+            "updateData CHAR(20) NOT NULL,"+
             "student_id CHAR(40) NOT NULL," +
             " FOREIGN KEY (student_id) REFERENCES Student(id) " +
             ")";

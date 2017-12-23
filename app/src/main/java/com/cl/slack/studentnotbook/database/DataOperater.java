@@ -36,15 +36,15 @@ public class DataOperater {
      * 添加数据
      */
     public boolean addGrades(Object...values) {
-        return addData(NAME_GRADES, values, "values(?,?)");
+        return addData(NAME_GRADES, values, "values(?,?,?)");
     }
 
     public boolean addStudent(Object...values) {
-        return addData(NAME_STUDENT, values, "values(?,?,?,?)");
+        return addData(NAME_STUDENT, values, "values(?,?,?,?,?)");
     }
 
     public boolean addMemorandum(Object...values) {
-        return addData(NAME_MEMORANDUM, values, "values(?,?,?,?)");
+        return addData(NAME_MEMORANDUM, values, "values(?,?,?,?,?)");
     }
 
     private boolean addData(String table, Object[] values, String operates) {
@@ -118,32 +118,36 @@ public class DataOperater {
      * 查询数据
      */
     public Cursor selectGrades(String values, String condition) {
-        return selectData(NAME_GRADES, values, condition);
+        return selectData(NAME_GRADES, values, condition, " ORDER BY updateData DESC");
     }
 
     public Cursor selectStudent(String condition) {
-        return selectData(NAME_STUDENT, "*", condition);
+        return selectData(NAME_STUDENT, "*", condition, " ORDER BY updateData DESC");
     }
 
-    public Cursor selectStudent(String values, String condition) {
-        return selectData(NAME_STUDENT, values, condition);
+    public Cursor selectStudent(String values, String condition, String order) {
+        return selectData(NAME_STUDENT, values, condition, order);
     }
 
     public Cursor selectMemorandum(String condition) {
-        return selectData(NAME_MEMORANDUM, "*", condition);
+        return selectData(NAME_MEMORANDUM, "*", condition, " ORDER BY updateData DESC");
     }
 
-    public Cursor selectMemorandum(String values, String condition) {
-        return selectData(NAME_MEMORANDUM, values, condition);
+    public Cursor selectMemorandum(String values, String condition, String order) {
+        return selectData(NAME_MEMORANDUM, values, condition, order);
     }
 
-    private Cursor selectData(String table, String values, String condition) {
+    private Cursor selectData(String table, String values, String condition, String order) {
         Cursor cursor;
         String SELECT;
         if (TextUtils.isEmpty(condition)) {
             SELECT = "select " + values + " from " + table;
         } else {
             SELECT = "select " + values + " from " + table + " where " + condition;
+        }
+
+        if(!TextUtils.isEmpty(order)) {
+            SELECT += order;
         }
         Log.i(TAG, "selectData: -------"+SELECT);
         cursor = mDatabase.rawQuery(SELECT, null);
