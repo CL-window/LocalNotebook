@@ -32,12 +32,15 @@ public class NoteAdapter extends BaseAdapter<NoteAdapter.VH> {
     @Override
     public void onBindViewHolder(VH holder, int position) {
 
-        holder.bindView(mNoteData.get(position));
+        final Memorandum memorandum = mNoteData.get(position);
+        holder.bindView(memorandum);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                if(mCallback != null) {
+                    mCallback.onClick(memorandum);
+                }
             }
         });
     }
@@ -49,13 +52,14 @@ public class NoteAdapter extends BaseAdapter<NoteAdapter.VH> {
 
     class VH extends BaseViewHolder {
 
+        int MAX_TEXT = 80;
         LinearLayout root;
-        TextView name;
+        TextView time;
         TextView content;
         VH(View itemView) {
             super(itemView);
             root = (LinearLayout) findView(R.id.note_root);
-            name = (TextView) findView(R.id.note_name);
+            time = (TextView) findView(R.id.note_time);
             content = (TextView) findView(R.id.note_content);
         }
 
@@ -71,17 +75,22 @@ public class NoteAdapter extends BaseAdapter<NoteAdapter.VH> {
             if(memorandum == null) {
                 return;
             }
-            name.setText("");
-            name.append(memorandum.student.nameCH);
-            name.append("\n");
-            name.append(memorandum.student.nameEN);
-            name.append("\n");
+            time.setText(memorandum.data);
             int length = memorandum.content.length();
             String msg = memorandum.content;
-            if(length > 50) {
-                msg = msg.substring(0, 50) + "...";
+            if(length > MAX_TEXT) {
+                msg = msg.substring(0, MAX_TEXT) + "...";
             }
             content.setText(msg);
         }
+    }
+
+    private Callback mCallback;
+    public void setCallback(Callback callback) {
+        this.mCallback = callback;
+    }
+
+    public interface Callback {
+        void onClick(Memorandum memorandum);
     }
 }

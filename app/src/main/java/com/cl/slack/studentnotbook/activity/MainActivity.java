@@ -33,7 +33,6 @@ public class MainActivity extends BaseActivity {
     private final static int REQ_STUDENT = 0x101;
     private static final String TAG = "Student";
 
-    NoteData mNoteData = NoteData.data;
     GradesData mGradesData = GradesData.data;
     StudentData mStudentData = StudentData.data;
 
@@ -57,16 +56,20 @@ public class MainActivity extends BaseActivity {
 
         List<Grades> grades = mGradesManager.findAllGrades();
         mGradesData.addAll(grades);
-        List<Memorandum> data = mMemorandumManeger.findMemorandumToday();
-        mNoteData.addAll(data);
     }
 
     private void initView() {
 
         RecyclerView studentList = (RecyclerView) findViewById(R.id.main_note_list);
         studentList.setLayoutManager(new LinearLayoutManager(this));
-        mStudentAdapter = new StudentAdapter(studentList, mStudentData);
+        mStudentAdapter = new StudentAdapter(studentList, mStudentData, false);
         studentList.setAdapter(mStudentAdapter);
+        mStudentAdapter.setCallback(new StudentAdapter.Callback() {
+            @Override
+            protected void onClick(Student student) {
+                enterNotePageView(student);
+            }
+        });
 
         mSpinner = (Spinner) findViewById(R.id.main_note_spinner);
         mSpinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, mGradesData.obtainSpinnerData());
@@ -84,6 +87,12 @@ public class MainActivity extends BaseActivity {
 
             }
         });
+    }
+
+    private void enterNotePageView(Student student) {
+        Intent intent = new Intent(this, NotePageActivity.class);
+        intent.putExtra(NotePageActivity.KEY_STUDENT_ID, student.getId());
+        startNewIntent(intent);
     }
 
     private void bindStudentByGrades(int pos) {
@@ -123,6 +132,19 @@ public class MainActivity extends BaseActivity {
             case REQ_STUDENT:
                 bindStudentByGrades(mSpinner.getSelectedItemPosition());
                 break;
+        }
+    }
+
+    // 最近一次按返回键的时间
+    private long mLastBackPressTime = 0;
+    @Override
+    public void onBackPressed() {
+
+        if ((System.currentTimeMillis() - mLastBackPressTime) > 2000) {
+            showToast("再按一次退出程序");
+            mLastBackPressTime = System.currentTimeMillis();
+        } else {
+            finish();
         }
     }
 

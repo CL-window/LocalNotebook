@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:minHeight="250dp"
+    android:minWidth="250dp"
+    android:background="@color/gray_100"
+    android:orientation="vertical">
+
+    <EditText
+        android:id="@+id/memorandum_edit_content"
+        android:layout_width="match_parent"
+        android:inputType="textMultiLine"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="true"
+        android:maxHeight="300dp"
+        android:scrollbars="vertical"
+        android:layout_weight="1"/>
+
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        >
+        <Button
+            android:id="@+id/memorandum_delete_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="删除"/>
+
+        <Button
+            android:id="@+id/memorandum_update_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:text="更新"/>
+
+    </FrameLayout>
+
+</LinearLayout>

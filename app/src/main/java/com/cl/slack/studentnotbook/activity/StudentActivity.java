@@ -57,11 +57,11 @@ public class StudentActivity extends BaseActivity {
 
         RecyclerView recyclerView = findViewById(R.id.student_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        mStudentAdapter = new StudentAdapter(recyclerView, mAllStudent);
+        mStudentAdapter = new StudentAdapter(recyclerView, mAllStudent, true);
         recyclerView.setAdapter(mStudentAdapter);
-        mStudentAdapter.setCallback(new StudentAdapter.Callback() {
+        mStudentAdapter.setCallback(new StudentAdapter.Callback(){
             @Override
-            public void onLongClick(Student student) {
+            protected void onLongClick(Student student) {
                 deleteStudent(student);
             }
         });
@@ -100,6 +100,7 @@ public class StudentActivity extends BaseActivity {
         boolean success = mStudentManager.addStudent(student);
         if(success) {
             nameTextCH.setText("");
+            nameTextCH.requestFocus();
             nameTextEN.setText("");
 
             mAllStudent.insert(student);

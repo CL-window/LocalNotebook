@@ -40,6 +40,10 @@ public abstract class Data<T> {
         list.add(0, t);
     }
 
+    public int indexOf(T t) {
+        return list.indexOf(t);
+    }
+
     public int remove(T t) {
         int index = list.indexOf(t);
         if(index != -1) {

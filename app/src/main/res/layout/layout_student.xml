@@ -13,15 +13,21 @@
         android:background="@color/gray"/>
 
     <TextView
+        android:id="@+id/student_grades_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""/>
+
+    <TextView
         android:id="@+id/student_name_ch"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="就拉发动机"/>
+        android:text=""/>
 
     <TextView
         android:id="@+id/student_name_en"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="djfakljfadf"/>
+        android:text=""/>
 
 </LinearLayout>

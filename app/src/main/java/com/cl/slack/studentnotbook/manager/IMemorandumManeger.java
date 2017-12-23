@@ -16,6 +16,8 @@ public interface IMemorandumManeger {
 
     boolean addMemorandum(Memorandum memorandum);
 
+    boolean addMemorandum(Memorandum memorandum, String studentId);
+
     boolean deleteMemorandum(Memorandum memorandum);
 
     boolean deleteMemorandumById(String id);
@@ -35,6 +37,10 @@ public interface IMemorandumManeger {
     List<Memorandum> findMemorandum(Student student, String data);
 
     List<Memorandum> findMemorandum(Student student, String data, boolean detail);
+
+    List<Memorandum> findAllMemorandumById(String studentId, boolean detail);
+
+    List<Memorandum> findAllMemorandumByStudent(Student student);
 
     List<Memorandum> findAllMemorandum();
 

@@ -27,7 +27,12 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
 
     @Override
     public boolean addMemorandum(Memorandum memorandum) {
-        return mDataOperater.addMemorandum(memorandum.getId(), memorandum.content, memorandum.data, currentTime(), memorandum.student.getId());
+        return addMemorandum(memorandum, memorandum.student.getId());
+    }
+
+    @Override
+    public boolean addMemorandum(Memorandum memorandum, String studentId) {
+        return mDataOperater.addMemorandum(memorandum.getId(), memorandum.content, memorandum.data, currentTime(), studentId);
     }
 
     @Override
@@ -48,7 +53,7 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
     public boolean updateMemorandum(Memorandum memorandum) {
         return mDataOperater.updateMemorandum("content = '" + memorandum.content +
                         "', data = '" + memorandum.data + "', student_id = '" + memorandum.student.getId() +
-                "', updateData = '" + currentTime() + "'",
+                "', update_data = '" + currentTime() + "'",
                 "id ='" + memorandum.getId() + "'");
     }
 
@@ -117,6 +122,23 @@ public class MemorandumManagerImpl implements IMemorandumManeger {
             } while (cursor.moveToNext());
         }
         return memorandums;
+    }
+
+    @Override
+    public List<Memorandum> findAllMemorandumById(String studentId, boolean detail) {
+        List<Memorandum> memorandums = new ArrayList<>();
+        Cursor cursor = mDataOperater.selectMemorandum("student_id = '" + studentId + "'");
+        if(cursor.moveToFirst()) {
+            do{
+                memorandums.add(newMemorandum(cursor, detail));
+            } while (cursor.moveToNext());
+        }
+        return memorandums;
+    }
+
+    @Override
+    public List<Memorandum> findAllMemorandumByStudent(Student student) {
+        return findAllMemorandumById(student.getId(), true);
     }
 
     @Override

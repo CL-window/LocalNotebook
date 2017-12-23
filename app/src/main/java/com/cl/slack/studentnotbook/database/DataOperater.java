@@ -118,11 +118,11 @@ public class DataOperater {
      * 查询数据
      */
     public Cursor selectGrades(String values, String condition) {
-        return selectData(NAME_GRADES, values, condition, " ORDER BY updateData DESC");
+        return selectData(NAME_GRADES, values, condition, " ORDER BY update_data DESC");
     }
 
     public Cursor selectStudent(String condition) {
-        return selectData(NAME_STUDENT, "*", condition, " ORDER BY updateData DESC");
+        return selectData(NAME_STUDENT, "*", condition, " GROUP BY grades_id ORDER BY update_data DESC");
     }
 
     public Cursor selectStudent(String values, String condition, String order) {
@@ -130,7 +130,7 @@ public class DataOperater {
     }
 
     public Cursor selectMemorandum(String condition) {
-        return selectData(NAME_MEMORANDUM, "*", condition, " ORDER BY updateData DESC");
+        return selectData(NAME_MEMORANDUM, "*", condition, " ORDER BY update_data DESC");
     }
 
     public Cursor selectMemorandum(String values, String condition, String order) {

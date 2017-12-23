@@ -7,5 +7,7 @@
 
     <color name="gray">#37484647</color>
 
+    <color name="gray_100">#484647</color>
+
 
 </resources>

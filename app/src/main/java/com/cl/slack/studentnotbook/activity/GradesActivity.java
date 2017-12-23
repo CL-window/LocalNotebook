@@ -67,6 +67,7 @@ public class GradesActivity extends BaseActivity {
     private void addGrades() {
         String name = nameText.getText().toString().trim();
         if(TextUtils.isEmpty(name)) {
+            showToast("随便起个名字吧");
             return;
         }
         Grades grades = new Grades(name);

@@ -18,20 +18,30 @@ import com.cl.slack.studentnotbook.data.StudentData;
 public class StudentAdapter extends BaseAdapter<StudentAdapter.VH>{
 
     private StudentData mStudentData;
-    public StudentAdapter(@NonNull RecyclerView recyclerView, StudentData data) {
+    private boolean showGrades;
+    public StudentAdapter(@NonNull RecyclerView recyclerView, StudentData data, boolean showGrades) {
         super(recyclerView);
         mStudentData = data;
+        this.showGrades = showGrades;
     }
 
     @Override
     public VH onCreateViewHolder(ViewGroup parent, int viewType) {
-        return new VH(inflateView(R.layout.layout_student, parent, false));
+        return new VH(inflateView(R.layout.layout_student, parent, false), showGrades);
     }
 
     @Override
     public void onBindViewHolder(VH holder, int position) {
         final Student student = mStudentData.get(position);
         holder.bindView(student);
+        holder.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(mCallback != null) {
+                    mCallback.onClick(student);
+                }
+            }
+        });
         holder.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
@@ -51,15 +61,24 @@ public class StudentAdapter extends BaseAdapter<StudentAdapter.VH>{
 
     class VH extends BaseViewHolder{
 
+        boolean show;
+        TextView gradesName;
         TextView nameCH;
         TextView nameEN;
-        VH(View itemView) {
+        VH(View itemView, boolean show) {
             super(itemView);
+            gradesName = (TextView) findView(R.id.student_grades_name);
             nameCH = (TextView) findView(R.id.student_name_ch);
             nameEN = (TextView) findView(R.id.student_name_en);
+            this.show = show;
         }
 
         void bindView(Student student) {
+            if(show) {
+                gradesName.setText(student.grades.name);
+            } else {
+                gradesName.setText("");
+            }
             nameCH.setText("Name_CH: " + student.nameCH);
             nameEN.setText("Name_EN: " + student.nameEN);
         }
@@ -70,7 +89,12 @@ public class StudentAdapter extends BaseAdapter<StudentAdapter.VH>{
         this.mCallback = callback;
     }
 
-    public interface Callback {
-        void onLongClick(Student student);
+    public static class Callback {
+        protected void onClick(Student student) {
+
+        }
+        protected void onLongClick(Student student) {
+
+        }
     }
 }

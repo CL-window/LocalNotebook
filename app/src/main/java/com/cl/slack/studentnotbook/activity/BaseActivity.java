@@ -31,11 +31,19 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected void startNewClass(Class zlass){
-        startActivity(new Intent(this, zlass));
+        startNewIntent(new Intent(this, zlass));
+    }
+
+    protected void startNewIntent(Intent intent){
+        startActivity(intent);
     }
 
     protected void startNewClassForResult(Class zlass, int code){
-        startActivityForResult(new Intent(this, zlass), code);
+        startNewIntentForResult(new Intent(this, zlass), code);
+    }
+
+    protected void startNewIntentForResult(Intent intent, int code){
+        startActivityForResult(intent, code);
     }
 
     protected void showToast(String msg) {

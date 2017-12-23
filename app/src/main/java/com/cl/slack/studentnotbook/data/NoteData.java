@@ -1,11 +1,6 @@
 package com.cl.slack.studentnotbook.data;
 
-import android.support.annotation.Nullable;
-
 import com.cl.slack.studentnotbook.bean.Memorandum;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by slack
