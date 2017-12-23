@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:padding="6dp"
+              android:minHeight="50dp"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:gravity="center"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/grades_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="就拉发动机"/>
+
+</LinearLayout>
